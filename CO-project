@@ -1,0 +1,745 @@
+.data 
+menu : .asciiz "\nSelect your operation:\n\n1. Subtraction\n2. Division\n3. Max of list\n4. Power\n5. factorization\n6 .Square Detection\n7. Rectangle Detection\n8. triangle Detection\n \nChoice: "
+
+#case1,2
+Firstnum: .asciiz "Enter First Num: "
+F0:.float 0.0
+Secondnum: .asciiz  "\nEnter Second Num: "
+Result : .asciiz "\nResult:"
+
+#case 3 
+arr: .word 0
+prompt: .asciiz "Enter the size of list: "
+input: .asciiz "Enter the list number's: "
+Maxmessage: .asciiz "Maxiumum Value is: "
+
+#case 4  
+base: .asciiz "Enter a base number:"
+power: .asciiz "Enter an exponent: "
+#case 5
+ inputMassege: .asciiz "Enter a positive Number: "
+   outputM0: .asciiz "Factors of "
+   outputM1: .asciiz " are\n"
+   space: .asciiz "\n" 
+
+#case 6
+FirstSide: .asciiz "\nEnter the First Side of Square : "
+SecondSide: .asciiz "\nEnter the Second Side of Square : "
+ThirdSide: .asciiz "\nEnter the Third Side of Square : "
+FourthSide: .asciiz "\nEnter the Fourth Side of Square : "
+Valid: .asciiz "\nThis Is Valid Square\n"
+Invalid: .asciiz "\nThis Number Is Invalid  Square !!!\n"
+Area: .asciiz "\nArea Of Square = "
+Perimeter: .asciiz "\nPerimeter Of Square = "
+
+#case 7
+FirstSidere: .asciiz "\nEnter the First Side of Rectangle : "
+	SecondSidere: .asciiz "\nEnter the Second Side of Rectangle : "
+	ThirdSidere: .asciiz "\nEnter the Third Side of Rectangle : "
+	FourthSidere: .asciiz "\nEnter the Fourth Side of Rectangle : "
+	Validre: .asciiz "\nThis Is Valid Rectangle\n"
+	Invalidre: .asciiz "\nThis Number Is Invalid  Rectangle !!!\n"
+	Areare: .asciiz "\nArea Of Rectanglee = "
+	Perimeterre: .asciiz "\nPerimeter Of Rectangle = "
+
+#case 8 
+opposite: .asciiz "\nEnter Length of opposite side(AB):"
+	adjacent : .asciiz "\nEnter Length of adjacent side(BC): "
+	hypotenuse : .asciiz "\nEnter Length of hypotenuse (AC): "
+	Valid8: .asciiz "\nThis Is Valid Triangle \n"
+	Invalid8: .asciiz "\nThis Number Is Invalid  Triangle  !!!\n"
+	Area8: .asciiz "\nArea Of Triangle = "
+	Perimeter8: .asciiz "\nPerimeter Of Triangle = "
+	Sine: .asciiz "\nSine Of Triangle = "
+	Cosine: .asciiz "\nCosine of Triangle ="
+	Tangent : .asciiz "\nTangent of Triangle ="
+	ZeroAsFloat: .float 0.0
+	Averrage: .float 2.0
+.text 
+main:
+loop: 
+#show menu
+li $v0,4 #system call for print string
+la $a0,menu 
+syscall
+
+# get choice 
+li $v0,5 # system call for get integer 
+syscall
+
+move $t0,$v0 #move choice from v0 to t0 ( t0 = choice)
+
+beqz $t0,Exitprogram # if t0==0
+#switch cases 
+#make the register s0 =1 to compare it with choice
+addi $s0,$zero,1
+#case 1 condition 
+bne $t0,$s0,c2_cond #if t0 != s0 goto case condition 2 
+j c1_body
+#case 2 condition 
+c2_cond: 
+addi $s0,$zero,2 #s0=2
+bne $t0,$s0,c3_cond #if t0!= s0 goto case condition 3
+j c2_body
+#case 3 condition 
+c3_cond:
+addi $s0,$zero,3 #s0=3
+bne $t0,$s0,c4_cond #if t0!= s0 goto case condition 4
+j c3_body 
+#case 4 condition 
+c4_cond:
+addi $s0,$zero,4#s0=4
+bne $t0,$s0,c5_cond #if t0!= s0 goto case condition 5
+j c4_body
+#case 5 condition 
+c5_cond:
+addi $s0,$zero,5 # s0=5
+bne $t0,$s0,c6_cond #if t0!= s0 goto case  condition 6
+j c5_body
+#case 6 condition 
+c6_cond:
+addi $s0,$zero,6 #s0=6
+bne $t0,$s0,c7_cond #if t0!= s0 goto case condition 7
+j c6_body
+#case 7 condition 
+c7_cond:
+addi $s0,$zero,7 #s0=7
+bne $t0,$s0,c8_cond #if t0!= s0 goto case condition 8
+j c7_body
+#case 8 condition 
+c8_cond:
+addi $s0,$zero,8 #s0=8
+bne $t0,$s0,Exit #if t0!= s0 goto Exit
+j c8_body
+
+c1_body:
+
+li $v0,4 #system call for print string
+la $a0,Firstnum 
+syscall
+
+li $v0,6 #scan for first number f0= input
+syscall
+
+lwc1 $f4,F0 # to modify or move any float number
+
+add.s $f1,$f4,$f0 #f1 = f4+f0
+
+li $v0,4 #system call for print string
+la $a0,Secondnum
+syscall
+
+li $v0,6 #scan for second number f0=input
+syscall
+
+ li $v0,4 #system call for print string
+ la $a0,Result
+ syscall
+ 
+ li $v0,2 #system call for print float number
+ sub.s $f12,$f1,$f0 #f12 = f1(first)-f0(second)  f12 is argument ( pass to syscall)
+ syscall
+ 
+j Exit #go to Exit 
+
+c2_body:
+li $v0,4 #system call for print string
+la $a0,Firstnum
+syscall
+
+li $v0,6 #scan for first number
+syscall
+
+lwc1 $f4,F0 # to modify or move any float number
+add.s $f1,$f4,$f0 #f1=f4+f0
+
+li $v0,4 #system call for print string
+la $a0,Secondnum
+syscall
+
+li $v0,6 #scan for second number 
+syscall
+
+ li $v0,4  #system call for print string
+ la $a0,Result
+ syscall
+ 
+ li $v0,2 ##system call for print float number
+ div.s $f12,$f1,$f0
+ syscall
+ 
+j Exit #go to Exit
+
+c3_body: 
+  #Loading array into $t5
+    la $t5, arr
+
+    li $s0, 0
+
+    li $v0, 4
+    la $a0, prompt
+    syscall
+
+    li $v0, 5
+    syscall
+    move $s1, $v0 #s1= size of array 
+#Asking the user for input
+    li $v0, 4
+    la $a0, input
+    syscall
+LooP: 
+    
+    #Storing user input in array address in $t5
+    li $v0, 5
+    syscall
+    sw $v0, 0($t5)
+ 
+    #Counting iterations for the loop as well as the array address
+    addi $s0, $s0, 1#s=s+1
+    addi $t5, $t5, 4 #t=t+4
+
+    #Loop Exit
+    beq $s0, $s1, pass
+    j LooP
+    
+pass:
+ la $t5, arr # load the array start address
+jal Maximumfn
+
+li $v0,4
+la $a0,Maxmessage
+ syscall 
+       
+      li $v0,1
+      move $a0,$v1
+       syscall 
+        j Exit
+
+
+
+    
+c4_body:
+#show message enter "a base number"
+		li $v0, 4
+		la $a0, base 
+		syscall
+		
+		#get the base number
+		li $v0, 5
+		syscall
+		
+		#Store the base to $t0
+		move $t0, $v0 
+		
+		#show message "enter an exponent number"
+		li $v0, 4
+		la $a0, power 
+		syscall
+			
+		#get the exponent number
+		li $v0, 5
+		syscall
+		
+		#Store the exponent to $t1
+		move $t1, $v0
+		
+		#move base to $a0 and exponent to $a1
+		move $a0, $t0    #base
+		move $a1, $t1    #exponent
+		
+		#Start function
+		jal powerFn 
+		
+		li $v0,4 #system call for print string
+		la $a0,Result
+		syscall
+		# print result
+		li $v0,1
+		addi $a0,$v1,0
+		syscall
+		
+		#the program is done 
+		j Exit
+	
+
+c5_body:
+   #print the input massege
+   li $v0, 4
+   la $a0, inputMassege
+   syscall
+   #get int from the user
+   li $v0, 5
+   syscall
+   #load the input data to $a1
+   move $a1, $v0
+   
+   jal factfn
+   
+   j Exit
+   
+ 
+   
+c6_body:
+#show message enter "the First Side of Square"
+		li $v0, 4
+		la $a0, FirstSide 
+		syscall
+		
+		#get the First number
+		li $v0, 5
+		syscall
+		
+		#Store the First number to $t0
+		move $t0, $v0 
+		
+		
+		#show message enter "the Second Side of Square"
+		li $v0, 4
+		la $a0, SecondSide 
+		syscall
+		
+		#get the Second number
+		li $v0, 5
+		syscall
+		
+		#Store the Second Number to $t0
+		move $t1, $v0 
+		
+		
+		
+		#show message enter "the Third Side of Square"
+		li $v0, 4
+		la $a0, ThirdSide 
+		syscall
+		
+		#get the Third number
+		li $v0, 5
+		syscall
+		
+		#Store the Third number to $t0
+		move $t2, $v0 
+		
+		
+		
+		#show message "the Fourth Side of Square"
+		li $v0, 4
+		la $a0, FourthSide 
+		syscall
+			
+		#get the Fourth number
+		li $v0, 5
+		syscall
+		
+		#Store the Fourth number to $t1
+		move $t3, $v0
+		
+		#move First number to $a0 , Second number to $a1 , Third number to $a2 and Fourth number to $a3
+		move $s0, $t0    #First number 
+		move $s1, $t1    #Second number 
+		move $s2, $t2    #Third number 
+		move $s3, $t3    #Fourth number 
+		
+		#intialize Area,Perimeter
+		addi $s5 , $zero , 0   #Area
+		addi $s6 , $zero , 0   #Perimeter
+		#If Codition (a == b && a == c && a == d)
+		bne $s0, $s1, ELSE # cond1: branch if !( a == b )
+ 		bne $s0, $s2, ELSE # cond2: branch if !( a == c ) 
+ 		bne $s0, $s3, ELSE # cond2: branch if !( a == d ) 
+ 		li $v0, 4
+		la $a0, Valid
+		syscall
+		mul $s5, $s0, $s0   # Area = a*a
+		mul $s6, $s0, 4  # Perimeter = a*4
+		
+	        #show message "Area Of Square ="
+		li $v0, 4
+		la $a0, Area 
+		syscall	
+		# print Area
+		li $v0,1
+		move $a0,$s5
+		syscall
+		
+	       #show message "Perimeter Of Square ="
+		li $v0, 4
+		la $a0, Perimeter 
+		syscall	
+		# print Perimeter
+		li $v0,1
+		move $a0,$s6
+		syscall
+		#case6 is done 
+		j Exit
+		
+		
+		ELSE: 
+		#show message "This Number Is Invalid  Square !!!"
+		li $v0, 4
+		la $a0, Invalid 
+		syscall
+		#tcase6 is done 
+                  j Exit
+c7_body:
+#show message enter "the First Side of Rectangle"
+		li $v0, 4
+		la $a0, FirstSidere 
+		syscall
+		
+		#get the First number
+		li $v0, 5
+		syscall
+		
+		#Store the First number to $t0
+		move $t0, $v0 
+		
+		
+		#show message enter "the Second Side of Rectangle"
+		li $v0, 4
+		la $a0, SecondSidere 
+		syscall
+		
+		#get the Second number
+		li $v0, 5
+		syscall
+		
+		#Store the Second Number to $t0
+		move $t1, $v0 
+		
+		
+		
+		#show message enter "the Third Side of Rectangle"
+		li $v0, 4
+		la $a0, ThirdSidere 
+		syscall
+		
+		#get the Third number
+		li $v0, 5
+		syscall
+		
+		#Store the Third number to $t0
+		move $t2, $v0 
+		
+		
+		
+		#show message "the Fourth Side of Rectangle"
+		li $v0, 4
+		la $a0, FourthSidere 
+		syscall
+			
+		#get the Fourth number
+		li $v0, 5
+		syscall
+		
+		#Store the Fourth number to $t1
+		move $t3, $v0
+		
+		#move First number to $a0 , Second number to $a1 , Third number to $a2 and Fourth number to $a3
+		move $s0, $t0    #First number 
+		move $s1, $t1    #Second number 
+		move $s2, $t2    #Third number 
+		move $s3, $t3    #Fourth number 
+		
+		#intialize Area,Perimeter
+		addi $s5 , $zero , 0   #Area
+		addi $s6 , $zero , 0   #Perimeter
+		addi $s7 , $zero , 0   #Flag
+
+		# if (a == c && b == d && a!=b && b!=c)
+		bne $s0, $s2 , ELSE4 # cond1: branch if ( a == c)
+ 		bne $s1, $s3, ELSE4 # cond2: branch if ( b == d) 
+ 		beq $s0,$s1 ,ELSE4
+ 		beq $s1,$s2,ELSE4
+ 		li $v0, 4
+		la $a0, Validre
+		syscall
+		j EXIT
+		ELSE4: 		
+ 		li $v0, 4
+		la $a0, Invalidre
+		addi $s7 ,$zero,1   #Flag
+		syscall
+		#case7 is done 
+		j Exit
+		
+		EXIT:
+	       #If Codition ( a != b)
+		beq   $s0, $s1, ELSEIF # cond1: branch if !( a == b)
+		mul $s5, $s0, $s1   # Area = a*b
+		add $s6, $s0, $s1 # Perimeter = (a+b)*2
+		mul $s6, $s6, 2
+		j EXIT2
+		ELSEIF:
+		beq $s0, $s2, ELSEIF2 # cond1: branch if !( a == c)
+		mul $s5, $s0, $s2   # Area = a*c
+		add $s6, $s0, $s2 # Perimeter = (a+c)*2
+		mul $s6, $s6, 2
+		j EXIT2
+	       ELSEIF2:
+	       beq $s0, $s3, ELSEIF2 # cond1: branch if !( a == d)
+		mul $s5, $s0, $s3   # Area = a*d
+		add $s6, $s0, $s3 # Perimeter = (a+d)*2
+		mul $s6, $s6, 2
+		j EXIT2
+		
+		EXIT2:
+		#show message "Area Of Rectangle ="
+		li $v0, 4
+		la $a0, Areare 
+		syscall	
+		# print Area
+		li $v0,1
+		move $a0,$s5
+		syscall
+		
+	       #show message "Perimeter Of Rectangle ="
+		li $v0, 4
+		la $a0, Perimeterre 
+		syscall	
+		# print Perimeter
+		li $v0,1
+		move $a0,$s6
+		syscall
+		#tcase7 is done 
+		j Exit
+c8_body:
+lwc1 $f1 , ZeroAsFloat   #opposite
+		lwc1 $f2 , ZeroAsFloat   #adjacent
+		lwc1 $f3 , ZeroAsFloat   #hypotenuse
+	        lwc1 $f31  , ZeroAsFloat # Averrage
+		#show message enter "the opposite of Triangle"
+		li $v0, 4
+		la $a0, opposite 
+		syscall
+		
+		#get the opposite
+		li $v0, 6
+		syscall
+		
+		#Store the opposite to $t0
+		add.s $f1 , $f0 , $f31
+		
+		
+		#show message enter "the adjacent of Triangle"
+		li $v0, 4
+		la $a0, adjacent 
+		syscall
+		
+		#get the adjacent
+		li $v0, 6
+		syscall
+		
+		#Store the adjacent to $t0
+		add.s $f2 , $f0 , $f31
+		
+		
+		
+		#show message enter "the hypotenuse of Triangle"
+		li $v0, 4
+		la $a0, hypotenuse 
+		syscall
+		
+		#get the hypotenuse
+		li $v0, 6
+		syscall
+		
+		#Store the hypotenuse to $t0
+	       
+	       add.s $f3 , $f0 , $f31
+
+		#intialize Area,Perimeter
+		lwc1 $f4 , ZeroAsFloat   #Area
+		lwc1 $f5 , ZeroAsFloat  #Perimeter
+		lwc1 $f6 , ZeroAsFloat   #Sine
+		lwc1 $f7 , ZeroAsFloat   #Cosine
+		lwc1 $f8 , ZeroAsFloat  #Tangent
+		lwc1 $f9 , ZeroAsFloat  #a2 + b2
+		lwc1 $f10 , ZeroAsFloat   #a2 + c2
+		lwc1 $f11 , ZeroAsFloat  #b2 + c2
+		lwc1 $f12  , ZeroAsFloat # Averrage
+		lwc1 $f30  , Averrage # Averrage
+		add.s $f9  , $f0 , $f1   #a2 + b2
+		add.s $f10  , $f0 , $f2   #a2 + c2
+		add.s $f11 , $f1 , $f2   #b2 + c2
+		
+		#If Codition (c2 < a2 + b2 || b2 < a2 + c2  || a2 < b2 + c2 )
+		c.lt.s     $f2, $f9    # cond1: branch if (c2 < a2 + b2 )
+		bc1t go
+		j Exitin
+		go:
+		c.lt.s    $f1, $f10     # cond2: branch if ( b2 < a2 + c2 )
+		bc1t go1
+		j Exitin
+		go1:
+		c.lt.s     $f0, $f11    #  cond2: branch if ( a2 < b2 + c2 ) 
+		bc1t go2
+		j Exitin
+
+		go2:
+ 		#Print VALID Message
+ 		li $v0, 4
+		la $a0, Valid8
+		syscall         
+		j    Exit1     
+		          
+		Exitin:
+ 	        #Print INVALID Message
+ 		li $v0, 4
+		la $a0, Invalid8
+		syscall
+		#the program is done 
+		j Exit
+ 	    
+ 	        Exit1:
+
+		add.s $f5 , $f1 , $f2  #Perimeter
+		add.s $f5 , $f5 , $f3 #Perimeter
+	       #show message "Perimeter Of Triangle ="
+		li $v0, 4
+		la $a0, Perimeter8 
+		syscall	
+		# print Perimeter
+		li $v0,2
+		mov.s $f12,$f5
+		syscall
+		#Area = sqrt(s*(s-a2)*(s-b2)*(s-c2));
+		div.s $f12 , $f5 , $f30    # Averrage(s)
+		sub.s $f13 , $f12 , $f1    # S - a2
+		sub.s $f14 , $f12 , $f2    # s - b2
+		sub.s $f15 , $f12 , $f3    # S - c2
+		mul.s $f4 , $f12 , $f13   # s*(s - a2)
+		mul.s $f4 , $f4 , $f14    # *(s - b2)
+		mul.s $f4 , $f4 , $f15    # *(s - d2)
+		#show message "Area Of Triangle ="
+		li $v0, 4
+		la $a0, Area8 
+		syscall	
+		# print Area
+		li $v0,2
+		mov.s $f12,$f4
+		syscall
+		div.s $f6 , $f1 , $f3  #Sine = Opposite / hypotenuse
+		div.s $f7 , $f2 , $f3  #Cosine = adjacent / hypotenuse
+		div.s $f8 , $f1 , $f2  #Tangent = Opposite / adjacent
+		#show message "Sine Of Triangle ="
+		li $v0, 4
+		la $a0, Sine 
+		syscall	
+		# print Sine
+		li $v0,2
+		mov.s  $f12,$f6
+		syscall
+		#show message "Cosine Of Triangle ="
+		li $v0, 4
+		la $a0, Cosine 
+		syscall	
+		# print Cosine
+		li $v0,2
+		mov.s $f12,$f7
+		syscall
+		#show message "Tangent Of Triangle ="
+		li $v0, 4
+		la $a0, Tangent 
+		syscall	
+		# print Tangent
+		li $v0,2
+		mov.s $f12,$f8
+		syscall		
+		#the program is done 
+		j Exit
+		
+		
+		       
+Maximumfn:
+    lw $t2, 0($t5) # max = first element
+    li $s0, 0 # i = 0
+
+Max_loop:
+
+    lw $t3, 0($t5) # temp = actual array element
+    slt $t4, $t2, $t3 # max < temp ?
+    bne $t4, 1, ElsE # jump to else branch if it condition is false
+    move $t2, $t3 # condition was true let max = temp
+
+ElsE:
+    addi $s0, $s0, 1 # i++
+    addi $t5, $t5, 4 # array += 4
+    beq $s0, $s1, ExiT # i < num
+    j Max_loop
+
+ExiT: 
+move $v1,$t2
+jr $ra 
+
+
+
+powerFn:
+		#move base to $s1 and exponent to $s2
+		move $s1, $a0    #base
+		move $s2, $a1    #exponent
+		
+		#intialize res = 1
+		addi $s0 , $zero , 1   #result
+		
+		while:
+			beq $s2, 0 , exit   #while condition
+			mul $s0, $s0, $s1   # res*= base
+			addi $s2, $s2, -1   # exp --
+			j while	
+		exit:
+			#to return the value of result 
+			move $v1 , $s0			
+			jr $ra
+			
+			
+	
+		
+factfn:
+   #print the outputMassege 0
+   li $v0, 4
+   la $a0, outputM0
+   syscall
+   #output input data
+   li $v0, 1
+   move $a0, $a1
+   syscall
+   #print the outputMassege 1
+   li $v0, 4
+   la $a0, outputM1
+   syscall
+   #initialize the counter at $a2
+   li $a2, 1
+   #start the loop
+   forLoop:
+      #get the % and store it at &a3
+      div $a1, $a2
+      mfhi $a3
+
+      #if the mod not equal to zero jumb to exitinnerif else print the counter out
+      bne $a3, $zero, exitinnerif
+      #print the counter
+      li $v0, 1
+      move $a0, $a2
+      syscall
+      #print space between the number
+      li $v0,4
+      la $a0,space
+      syscall
+      exitinnerif:
+         #the condition at the end of the loop that exit the loop 
+         beq $a2, $a1, ExitlooP
+         #increase the counter
+         addi $a2, $a2, 1
+         #return to start of the loop
+    j forLoop
+   #exit the loop
+   ExitlooP:
+   jr $ra
+   
+   
+   
+Exit :
+j loop # goto loop
+Exitprogram:
+li $v0, 10 # system call code for exit 
+syscall
